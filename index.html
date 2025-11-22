@@ -118,37 +118,51 @@
                         <div class="setting-item"><label>Show Part of Speech</label> <input type="checkbox"
                                 id="show-pos" checked></div>
                         <div class="setting-item"><label>Show Pronunciation</label> <input type="checkbox" id="show-dia"
-                                <div id="stats-modal" class="modal hidden">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2>Statistics</h2>
-                                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="stats-grid">
-                                        <div class="stat-box">
-                                            <span class="stat-value" id="stat-total">0</span>
-                                            <span class="stat-label">Practiced</span>
-                                        </div>
-                                        <div class="stat-box">
-                                            <span class="stat-value" id="stat-correct">0</span>
-                                            <span class="stat-label">Correct</span>
-                                        </div>
-                                        <div class="stat-box">
-                                            <span class="stat-value" id="stat-accuracy">0%</span>
-                                            <span class="stat-label">Accuracy</span>
-                                        </div>
-                                    </div>
-                                    <h3>Recent Mistakes</h3>
-                                    <ul id="mistakes-list"></ul>
-                                    <button id="reset-stats" class="danger-btn">Reset Stats</button>
-                                </div>
-                            </div>
+                                checked></div>
+                        <div class="setting-item"><label>Show Sentence</label> <input type="checkbox" id="show-sentence"
+                                checked></div>
+                        <div class="setting-item"><label>Show Etymology</label> <input type="checkbox" id="show-ety"
+                                checked></div>
+                        <div class="setting-item"><label>Auto-pronounce</label> <label class="switch"><input
+                                    type="checkbox" id="auto-audio"><span class="slider round"></span></label></div>
+                        <div class="setting-item"><label>Voice</label> <select id="voice-select"></select></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Modal -->
+        <div id="stats-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Statistics</h2>
+                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-total">0</span>
+                            <span class="stat-label">Practiced</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-correct">0</span>
+                            <span class="stat-label">Correct</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-accuracy">0%</span>
+                            <span class="stat-label">Accuracy</span>
                         </div>
                     </div>
+                    <h3>Recent Mistakes</h3>
+                    <ul id="mistakes-list"></ul>
+                    <button id="reset-stats" class="danger-btn">Reset Stats</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <script src="data.js"></script>
-                    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
