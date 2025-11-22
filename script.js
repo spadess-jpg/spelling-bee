@@ -16,7 +16,7 @@ let settings = {
     showSentence: true,
     showEty: true,
     voiceURI: null,
-    autoAudio: false
+    autoAudio: true
 };
 
 // DOM Elements
@@ -56,8 +56,11 @@ function init() {
     populateVoices();
 
     // Event Listeners
-    startBtn.addEventListener('click', () => switchView('game'));
-    homeBtn.addEventListener('click', () => switchView('home'));
+    if (startBtn) {
+        startBtn.addEventListener('click', () => switchView('game'));
+    }
+
+    if (homeBtn) homeBtn.addEventListener('click', () => switchView('home'));
 
     submitBtn.addEventListener('click', checkWord);
     nextBtn.addEventListener('click', nextWord);
@@ -256,22 +259,31 @@ function checkWord() {
         stats.total++;
         stats.correct++;
         saveStats();
+
+        // Success UI
         submitBtn.classList.add('hidden');
         nextBtn.classList.remove('hidden');
         correctAnswerContainer.classList.add('hidden');
+        wordInput.disabled = true;
         nextBtn.focus();
     } else {
-        // Wrong Answer Logic
+        // Wrong Answer Logic - One Try Only
+        stats.total++;
         if (!stats.mistakes.find(m => m.word === currentWord.word)) {
             stats.mistakes.unshift({ word: currentWord.word, date: new Date().toISOString() });
             if (stats.mistakes.length > 50) stats.mistakes.pop();
-            stats.total++; // Count attempt
-            saveStats();
         }
+        saveStats();
 
-        // Show correct spelling
+        // Failure UI
         correctAnswerContainer.innerHTML = `Incorrect! The correct spelling is: <strong>${currentWord.word}</strong>`;
         correctAnswerContainer.classList.remove('hidden');
+
+        // Disable further attempts for this word
+        submitBtn.classList.add('hidden');
+        nextBtn.classList.remove('hidden');
+        wordInput.disabled = true;
+        nextBtn.focus();
     }
 }
 
@@ -341,4 +353,6 @@ document.getElementById('reset-stats').addEventListener('click', () => {
 });
 
 // Start
-init();
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+});
