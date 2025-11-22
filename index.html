@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Bee Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Home View -->
+        <div id="home-view" class="view-container">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <i class="fa-solid fa-spell-check"></i>
+                </div>
+                <h1>Spelling<span class="highlight">SemiFinal</span></h1>
+                <p class="subtitle">Master the word list with style.</p>
+                <button id="start-btn" class="primary-btn large-btn">Start Practicing <i
+                        class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Game View -->
+        <div id="game-view" class="view-container hidden">
+            <header>
+                <div class="logo" id="game-logo">
+                    <i class="fa-solid fa-spell-check"></i> SpellingSemiFinal
+                </div>
+                <div class="header-controls">
+                    <button id="home-btn" class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
+                    <button id="stats-btn" class="icon-btn" title="Statistics"><i
+                            class="fa-solid fa-chart-simple"></i></button>
+                    <button id="settings-btn" class="icon-btn" title="Settings"><i
+                            class="fa-solid fa-gear"></i></button>
+                </div>
+            </header>
+
+            <main>
+                <div class="card-container">
+                    <div class="word-info-card" id="word-info-card">
+                        <!-- Content injected by JS -->
+                        <div class="info-item" id="info-pos"><span class="label">POS:</span> <span
+                                class="value">Noun</span></div>
+                        <div class="info-item" id="info-dia"><span class="label">Pronunciation:</span> <span
+                                class="value">/word/</span></div>
+                        <div class="info-item" id="info-def"><span class="label">Definition:</span>
+                            <p class="value">...</p>
+                        </div>
+                        <div class="info-item" id="info-sentence"><span class="label">Example:</span>
+                            <p class="value">...</p>
+                        </div>
+                        <div class="info-item" id="info-etymology"><span class="label">Etymology:</span>
+                            <p class="value">...</p>
+                        </div>
+                    </div>
+
+                    <div class="interaction-area">
+                        <button id="play-audio-btn" class="primary-btn audio-btn"><i
+                                class="fa-solid fa-volume-high"></i> Listen</button>
+
+                        <div class="input-group">
+                            <input type="text" id="word-input" placeholder="Type the word..." autocomplete="off">
+                            <button id="submit-btn" class="action-btn">Check</button>
+                        </div>
+
+                        <div id="feedback-container" class="feedback-grid"></div>
+                        <div id="correct-answer-container" class="hidden"></div>
+
+                        <div class="controls">
+                            <button id="next-btn" class="secondary-btn hidden">Next Word <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                        <div id="message-area"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-group">
+                        <h3>Appearance</h3>
+                        <div class="setting-item">
+                            <label>Dark Mode</label>
+                            <label class="switch">
+                                <input type="checkbox" id="theme-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Practice Mode</h3>
+                        <div class="setting-item">
+                            <label>Mode</label>
+                            <select id="mode-select">
+                                <option value="practice">Practice (Hints Allowed)</option>
+                                <option value="test">Test (Audio Only)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Display Features</h3>
+                        <div class="setting-item"><label>Show Definition</label> <input type="checkbox" id="show-def"
+                                checked></div>
+                        <div class="setting-item"><label>Show Part of Speech</label> <input type="checkbox"
+                                id="show-pos" checked></div>
+                        <div class="setting-item"><label>Show Pronunciation</label> <input type="checkbox" id="show-dia"
+                                checked></div>
+                        <div class="setting-item"><label>Show Example Sentence</label> <input type="checkbox"
+                                id="show-sentence" checked></div>
+                        <div class="setting-item"><label>Show Etymology</label> <input type="checkbox" id="show-ety"
+                                checked></div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Audio</h3>
+                        <div class="setting-item">
+                            <label>Voice</label>
+                            <select id="voice-select"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Modal -->
+        <div id="stats-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Statistics</h2>
+                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-total">0</span>
+                            <span class="stat-label">Practiced</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-correct">0</span>
+                            <span class="stat-label">Correct</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="stat-accuracy">0%</span>
+                            <span class="stat-label">Accuracy</span>
+                        </div>
+                    </div>
+                    <h3>Recent Mistakes</h3>
+                    <ul id="mistakes-list"></ul>
+                    <button id="reset-stats" class="danger-btn">Reset Stats</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
