@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spelling Bee Practice</title>
+    <title>Spelling Bee Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -14,118 +14,181 @@
 
 <body>
     <div class="app-container">
-        <!-- Home View -->
-        <div id="home-view" class="view-container">
-            <div class="hero-content">
-                <div class="hero-logo">
-                    <i class="fa-solid fa-spell-check"></i>
+        <!-- Persistent Top Bar -->
+        <nav class="top-bar">
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i> Spelling<span class="text-accent">Pro</span>
+            </div>
+            <div class="quick-stats-bar">
+                <div class="mini-stat" title="Words Mastered">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span id="top-mastered">0</span>
                 </div>
-                <h1>Spelling<span class="highlight">SemiFinal</span></h1>
-                <p class="subtitle">Master the word list with style.</p>
-                <button id="start-btn" class="primary-btn large-btn">Start Practicing <i
-                        class="fa-solid fa-arrow-right"></i></button>
+                <div class="mini-stat" title="Current Streak">
+                    <i class="fa-solid fa-fire"></i>
+                    <span id="top-streak">0</span>
+                </div>
+                <button id="settings-trigger" class="btn-icon"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </nav>
+
+        <!-- Home Dashboard -->
+        <div id="home-view" class="view-container">
+            <div class="dashboard-grid">
+                <!-- Hero Section -->
+                <div class="glass-panel hero-card">
+                    <h1>Master Your<br>Vocabulary</h1>
+                    <p>Elevate your spelling with our premium practice tool. Track progress, analyze patterns, and
+                        improve daily.</p>
+                    <button id="start-btn" class="btn btn-primary">
+                        Start Session <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Daily Summary -->
+                <div class="glass-panel summary-card">
+                    <h3><i class="fa-solid fa-chart-simple text-accent"></i> Overview</h3>
+                    <div class="stat-row">
+                        <span class="stat-label">Accuracy</span>
+                        <span class="stat-val" id="home-accuracy">0%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Avg Speed</span>
+                        <span class="stat-val" id="home-speed">0.0s</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Total Words</span>
+                        <span class="stat-val" id="home-total">0</span>
+                    </div>
+                    <div style="margin-top: auto; padding-top: 1rem;">
+                        <button id="view-stats-btn" class="btn btn-neumorph"
+                            style="width: 100%; justify-content: center;">
+                            Full Statistics
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="glass-panel feature-card" id="quick-practice-btn">
+                    <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Quick Sprint</h3>
+                    <p>10 words. Fast paced. Perfect for a quick brain warmup.</p>
+                </div>
+                <div class="glass-panel feature-card" id="endless-mode-btn">
+                    <div class="feature-icon"><i class="fa-solid fa-infinity"></i></div>
+                    <h3>Endless Flow</h3>
+                    <p>Immersive practice session with no limits.</p>
+                </div>
+                <div class="glass-panel feature-card" id="weakest-links-btn">
+                    <div class="feature-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3>Weakest Links</h3>
+                    <p>Target your most frequent mistakes.</p>
+                </div>
             </div>
         </div>
 
         <!-- Game View -->
         <div id="game-view" class="view-container hidden">
-            <header>
-                <div class="logo" id="game-logo">
-                    <i class="fa-solid fa-spell-check"></i> SpellingSemiFinal
-                </div>
-                <div class="header-controls">
-                    <button id="home-btn" class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
-                    <button id="stats-btn" class="icon-btn" title="Statistics"><i
-                            class="fa-solid fa-chart-simple"></i></button>
-                    <button id="settings-btn" class="icon-btn" title="Settings"><i
-                            class="fa-solid fa-gear"></i></button>
-                </div>
-            </header>
-
-            <main>
-                <div class="card-container">
-                    <div class="word-info-card" id="word-info-card">
-                        <!-- Content injected by JS -->
-                        <div class="info-item" id="info-pos"><span class="label">POS:</span> <span
-                                class="value">Noun</span></div>
-                        <div class="info-item" id="info-dia"><span class="label">Pronunciation:</span> <span
-                                class="value">/word/</span></div>
-                        <div class="info-item" id="info-def"><span class="label">Definition:</span>
-                            <p class="value">...</p>
-                        </div>
-                        <div class="info-item" id="info-sentence"><span class="label">Example:</span>
-                            <p class="value">...</p>
-                        </div>
-                        <div class="info-item" id="info-etymology"><span class="label">Etymology:</span>
-                            <p class="value">...</p>
+            <div class="game-container">
+                <div class="glass-panel word-display-card" id="word-info-card">
+                    <div class="word-section" id="section-meta">
+                        <div class="word-meta-tags">
+                            <span class="tag" id="info-pos">Noun</span>
+                            <span class="tag" id="info-dia">/word/</span>
                         </div>
                     </div>
-
-                    <div class="interaction-area">
-                        <button id="play-audio-btn" class="primary-btn audio-btn"><i
-                                class="fa-solid fa-volume-high"></i> Listen</button>
-
-                        <div class="input-group">
-                            <input type="text" id="word-input" placeholder="Type the word..." autocomplete="off">
-                            <button id="submit-btn" class="action-btn">Check</button>
-                        </div>
-
-                        <div id="feedback-container" class="feedback-grid"></div>
-                        <div id="correct-answer-container" class="hidden"></div>
-
-                        <div class="controls">
-                            <button id="next-btn" class="secondary-btn hidden">Next Word <i
-                                    class="fa-solid fa-arrow-right"></i></button>
-                        </div>
-                        <div id="message-area"></div>
+                    <div class="word-section" id="section-def">
+                        <p class="word-def" id="info-def">Definition goes here...</p>
+                    </div>
+                    <div class="word-section" id="section-sentence">
+                        <p class="word-example" id="info-sentence">Example sentence goes here...</p>
+                    </div>
+                    <div class="word-section" id="section-ety">
+                        <p class="word-ety" id="info-etymology">Etymology goes here...</p>
                     </div>
                 </div>
-            </main>
+
+                <div class="input-section">
+                    <button id="play-audio-btn" class="btn btn-neumorph"
+                        style="margin-bottom: 1.5rem; width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-volume-high"></i> Listen
+                    </button>
+
+                    <input type="text" id="word-input" class="neumorph-input" placeholder="TYPE HERE" autocomplete="off"
+                        spellcheck="false" autocorrect="off" autocapitalize="off" data-gramm="false"
+                        data-gramm_editor="false" data-enable-grammarly="false">
+
+                    <div id="feedback-container" class="feedback-grid"></div>
+                    <div id="correct-answer-container" class="glass-panel hidden"
+                        style="padding: 1rem; color: var(--accent); margin-bottom: 1.5rem;"></div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button id="submit-btn" class="btn btn-primary"
+                            style="flex: 1; justify-content: center;">Check</button>
+                        <button id="next-btn" class="btn btn-neumorph hidden"
+                            style="flex: 1; justify-content: center;">Next <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                        <button id="home-btn-game" class="btn btn-neumorph"
+                            style="width: 50px; justify-content: center;"><i class="fa-solid fa-house"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Settings Modal -->
         <div id="settings-modal" class="modal hidden">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Settings</h2>
-                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    <h2>Preferences</h2>
+                    <button class="close-modal btn-icon"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="setting-group">
                         <h3>Appearance</h3>
                         <div class="setting-item">
-                            <label>Dark Mode</label>
-                            <label class="switch">
+                            <label>Theme</label>
+                            <div class="toggle-switch">
                                 <input type="checkbox" id="theme-toggle">
-                                <span class="slider round"></span>
-                            </label>
+                                <label for="theme-toggle" class="toggle-label">
+                                    <i class="fa-solid fa-moon"></i>
+                                    <i class="fa-solid fa-sun"></i>
+                                </label>
+                            </div>
                         </div>
                     </div>
+
                     <div class="setting-group">
-                        <h3>Practice Mode</h3>
-                        <div class="setting-item">
-                            <label>Mode</label>
-                            <select id="mode-select">
-                                <option value="practice">Practice (Hints Allowed)</option>
-                                <option value="test">Test (Audio Only)</option>
-                            </select>
+                        <h3>Word Features</h3>
+                        <div class="setting-item"><label>Show Definition</label> <input type="checkbox" id="show-def">
                         </div>
-                    </div>
-                    <div class="setting-group">
-                        <h3>Display Features</h3>
-                        <div class="setting-item"><label>Show Definition</label> <input type="checkbox" id="show-def"
-                                checked></div>
                         <div class="setting-item"><label>Show Part of Speech</label> <input type="checkbox"
-                                id="show-pos" checked></div>
-                        <div class="setting-item"><label>Show Pronunciation</label> <input type="checkbox" id="show-dia"
-                                checked></div>
-                        <div class="setting-item"><label>Show Sentence</label> <input type="checkbox" id="show-sentence"
-                                checked></div>
-                        <div class="setting-item"><label>Show Etymology</label> <input type="checkbox" id="show-ety"
-                                checked></div>
-                        <div class="setting-item"><label>Auto-pronounce</label> <label class="switch"><input
-                                    type="checkbox" id="auto-audio"><span class="slider round"></span></label></div>
-                        <div class="setting-item"><label>Voice</label> <select id="voice-select"></select></div>
+                                id="show-pos"></div>
+                        <div class="setting-item"><label>Show Pronunciation</label> <input type="checkbox"
+                                id="show-dia"></div>
+                        <div class="setting-item"><label>Show Example Sentence</label> <input type="checkbox"
+                                id="show-sentence"></div>
+                        <div class="setting-item"><label>Show Etymology</label> <input type="checkbox" id="show-ety">
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Audio</h3>
+                        <div class="setting-item"><label>Auto-pronounce</label> <input type="checkbox" id="auto-audio">
+                        </div>
+                        <div class="setting-item">
+                            <label>Voice</label>
+                            <select id="voice-select" class="neumorph-select"></select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Speed: <span id="rate-value">0.9</span></label>
+                            <input type="range" id="rate-range" min="0.5" max="2" step="0.1">
+                        </div>
+                        <div class="setting-item">
+                            <label>Pitch: <span id="pitch-value">1.0</span></label>
+                            <input type="range" id="pitch-range" min="0.5" max="2" step="0.1">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,26 +199,46 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Statistics</h2>
-                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    <button class="close-modal btn-icon"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <span class="stat-value" id="stat-total">0</span>
-                            <span class="stat-label">Practiced</span>
+                    <div class="dashboard-grid" style="margin-bottom: 0;">
+                        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+                            <h3 id="stat-total" style="font-size: 2rem;">0</h3>
+                            <p class="stat-label">Total Words</p>
                         </div>
-                        <div class="stat-box">
-                            <span class="stat-value" id="stat-correct">0</span>
-                            <span class="stat-label">Correct</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-value" id="stat-accuracy">0%</span>
-                            <span class="stat-label">Accuracy</span>
+                        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+                            <h3 id="stat-accuracy" style="font-size: 2rem; color: var(--accent);">0%</h3>
+                            <p class="stat-label">Accuracy</p>
                         </div>
                     </div>
-                    <h3>Recent Mistakes</h3>
-                    <ul id="mistakes-list"></ul>
-                    <button id="reset-stats" class="danger-btn">Reset Stats</button>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+                            <h3 id="stat-speed" style="font-size: 2rem;">0.0s</h3>
+                            <p class="stat-label">Avg Speed</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+                            <h3 id="stat-streak" style="font-size: 2rem;">0</h3>
+                            <p class="stat-label">Best Streak</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem;">Weakest Links</h3>
+                    <div id="weakest-links-container" class="stats-list-container"></div>
+
+                    <h3 style="margin: 2rem 0 1rem;">Common Error Patterns</h3>
+                    <div id="error-patterns-container" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+
+                    <h3 style="margin: 2rem 0 1rem;">Performance by Type</h3>
+                    <div id="pos-stats-container"
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;"></div>
+
+                    <h3 style="margin: 2rem 0 1rem;">Recent Misses</h3>
+                    <ul id="mistakes-list" style="list-style: none; margin-bottom: 2rem;"></ul>
+
+                    <button id="reset-stats" class="btn btn-neumorph"
+                        style="color: #ef4444; width: 100%; justify-content: center;">Reset All Progress</button>
                 </div>
             </div>
         </div>
