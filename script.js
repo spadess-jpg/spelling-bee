@@ -423,23 +423,14 @@ function nextWord() {
 function playAudio() {
     if (!currentWord) return;
 
-    // Try to convert diacritic to readable text for better pronunciation
-    // or fallback to the word itself
+    // Use the word itself for pronunciation
+    // Modern TTS engines handle standard English words much better than phonetic approximations
     let textToSpeak = currentWord.word;
-
-    // Experimental: Use diacritic for pronunciation if available
-    // The user specifically requested "pronounce based on diacritics"
-    if (currentWord.diacritic) {
-        const phonetic = convertDiacriticToReadable(currentWord.diacritic);
-        if (phonetic) {
-            console.log(`Using phonetic spelling for ${currentWord.word}: ${phonetic}`);
-            textToSpeak = phonetic;
-        }
-    }
 
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.rate = settings.rate;
     utterance.pitch = settings.pitch;
+    utterance.lang = 'en-US'; // Ensure correct pronunciation rules
 
     if (settings.voiceURI) {
         const voices = speechSynthesis.getVoices();
@@ -447,6 +438,7 @@ function playAudio() {
         if (selectedVoice) utterance.voice = selectedVoice;
     }
 
+    console.log(`Speaking: "${textToSpeak}" (Rate: ${settings.rate}, Pitch: ${settings.pitch})`);
     speechSynthesis.speak(utterance);
 }
 
